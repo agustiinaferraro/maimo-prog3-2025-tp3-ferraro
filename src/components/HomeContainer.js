@@ -2,19 +2,24 @@
 import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import CharacterGrid from './CharacterGrid'
+import Image from 'next/image'
+import { useAppContext } from "@/app/context/AppContext"
 
 const BASE_URL = `https://rickandmortyapi.com/api/`
 
 const HomeContainer = () => {
   const [characters, setCharacters] = useState([])
+  const [filtered, setFiltered] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+  const { searchTerm } = useAppContext()
 
   const getCharacters = useCallback(async () => {
     try {
       setLoading(true)
       const response = await axios.get(`${BASE_URL}character`)
       setCharacters(response.data.results)
+      setFiltered(response.data.results)
       setLoading(false)
     } catch (error) {
       setError(true)
@@ -26,17 +31,45 @@ const HomeContainer = () => {
     getCharacters()
   }, [getCharacters])
 
-  return (
-    <div>
-      <h1 className='text-5xl flex justify-center py-5'>
-        Rick and Morty Maimo app
-      </h1>
+  useEffect(() => {
+    const filtro = characters.filter((char) =>
+      char.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    setFiltered(filtro)
+  }, [searchTerm, characters])
 
-      {!loading && <CharacterGrid characters={characters}/>}
-      {loading && (
-        <div className='flex justify-center items-center min-h-[300px]'>
-          Cargando...
-        </div>
+  if (loading) return <div className="text-white text-center mt-20">Cargando...</div>
+  if (error) return <div className="text-white text-center mt-20">Error al cargar los personajes</div>
+
+  return (
+    <div className="px-6 py-8 items-center md:w-5/5 overflow-x-hidden">
+      {searchTerm ? (
+        <>
+          <h2 className="text-left text-3xl text-white font-bold py-6">
+            Resultados para "{searchTerm}"
+          </h2>
+          {filtered.length > 0 ? (
+            <CharacterGrid characters={filtered} />
+          ) : (
+            <p className="text-white text-xl py-4">No se encontraron resultados.</p>
+          )}
+        </>
+      ) : (
+        <>
+          <div>
+            <Image
+              className="rounded-t-3xl"
+              src={'/assets/banner (2).png'}
+              width={1700}
+              height={800}
+              alt={'banner'}
+            />
+          </div>
+          <h1 className="text-4xl flex justify-center py-18 text-white">
+            Rick and Morty Maimo app
+          </h1>
+          <CharacterGrid characters={characters} />
+        </>
       )}
     </div>
   )

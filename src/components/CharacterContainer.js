@@ -29,7 +29,7 @@ const CharacterContainer = ({ id }) => {
   return (
     <>
       {!loading && !error && <CharacterCardSingle character={character} />}
-      <div>CharacterContainer {id}</div>
+      {/*<div>CharacterContainer {id}</div> */} 
     </>
   )
 }
