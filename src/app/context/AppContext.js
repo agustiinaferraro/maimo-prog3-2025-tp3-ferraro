@@ -6,26 +6,26 @@ const AppContext = createContext()
 export const AppContextProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
 
-  //estado para barra de busqueda global
+  // barra global
   const [searchTerm, setSearchTerm] = useState("");
 
-  //aca va mi logica y funciones custom
+  // filtro por especie
+  const [speciesFilter, setSpeciesFilter] = useState("")
 
   useEffect(() => {
-    console.log(favorites) //el console.log es asincronico. si quiero ver algun valor tengo que ponerlo en el useefecr y ponerlo en el array
-  }, [favorites]) //este es el array
+    console.log(favorites) 
+  }, [favorites])
 
-  //aca ver si es titile u origin title algo asi
   const handleAddToFavorites = (title, image, id, type) => {
     setFavorites([...favorites, { title, image, id, type }])
   };
 
   const deleteToFavorites = (borrar) => {
-    const newFavorites = favorites.filter(movie => movie.id !== borrar);  //el filter crea un nuevo array solo con las peliculas que cumplan con la condicion (todas las peliculas cuyo id sean distintos a "borrar")
-    setFavorites(newFavorites) //actualizo setfavorites
+    const newFavorites = favorites.filter(movie => movie.id !== borrar);
+    setFavorites(newFavorites)
   };
 
-  const favoritesQty = () => favorites.length //ver cuantos favoritos hay
+  const favoritesQty = () => favorites.length
 
   return (
     <AppContext.Provider
@@ -35,7 +35,9 @@ export const AppContextProvider = ({ children }) => {
         deleteToFavorites, 
         favoritesQty,
         searchTerm,       
-        setSearchTerm   
+        setSearchTerm,
+        speciesFilter,
+        setSpeciesFilter
       }}
     >
       {children}

@@ -37,7 +37,7 @@ const Navbar = () => {
             <Link href="/favorites">Favoritos</Link>
           </li>
           <li className="hover:text-white transition-colors duration-200">
-            <Link href="/">Episodios</Link>
+            <Link href="/species">Especies</Link>
           </li>
         </ul>
       </nav>
