@@ -51,7 +51,13 @@ const CharacterCardSingle = ({ character }) => {
   if (loading) return <p className="text-white text-center mt-10">Cargando resultados...</p>
 
   return (
-    <div className="px-6 py-8">
+    <div className="px-6 py-8 relative max-w-4xl mx-auto md:p-10">
+      <Link href="/">
+        <button className="text-7xl text-white hover:text-blue-500 active:text-blue-600 cursor-pointer mb-6">
+          ‹
+        </button>
+      </Link>
+
       {searchTerm && searchResults.length > 0 ? (
         <>
           <h2 className="text-white text-3xl mb-6">Resultados para "{searchTerm}"</h2>
@@ -62,37 +68,37 @@ const CharacterCardSingle = ({ character }) => {
           </div>
         </>
       ) : (
-        <div className="relative max-w-4xl mx-auto p-6">
-          <Link href="/">
-            <button className="absolute left-0 text-7xl text-white hover:text-blue-500 active:text-blue-600 cursor-pointer">
-              ‹
+        <div className="bg-[#0b0c10]/50 backdrop-blur-md rounded-2xl p-5 w-full max-w-full mx-auto flex flex-col md:flex-row h-full transform transition duration-300 hover:scale-105 shadow-5xl gap-6">
+          {/* imagen */}
+          <img
+            src={character.image}
+            alt={character.name}
+            className="w-full max-w-[240px] md:max-w-[300px] h-auto rounded-xl mx-auto md:mx-0"
+          />
+
+          {/* texto */}
+          <div className="text-white text-lg space-y-2 flex-grow">
+            <h2 className="text-3xl font-bold">{character.name}</h2>
+            <p className="text-[#8B5CF6]"><span className="font-bold text-[#E0E0E0]">Status:</span> {character.status}</p>
+            <p className="text-[#30EFFF]"><span className="font-bold text-[#E0E0E0]">Species:</span> {character.species}</p>
+            <p className="text-[#F6F930]"><span className="font-bold text-[#E0E0E0]">Gender:</span> {character.gender}</p>
+            <p className="text-[#00FF9F]"><span className="font-bold text-[#E0E0E0]">Origin:</span> {character.origin?.name}</p>
+            <p className="text-[#FF61A6]"><span className="font-bold text-[#E0E0E0]">Location:</span> {character.location?.name}</p>
+            <p className="text-[#00CC80]"><span className="font-bold text-[#E0E0E0]">Total de episodios:</span> {character.episode?.length}</p>
+
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                isFavorite
+                  ? deleteToFavorites(character.id)
+                  : handleAddToFavorites(character.name, character.image, character.id, "character")
+              }}
+              className="flex items-center justify-center gap-2 text-yellow-400 hover:text-yellow-500 text-3xl cursor-pointer select-none mt-4"
+              aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+              title={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+            >
+              {isFavorite ? "⭐" : "☆"}
             </button>
-          </Link>
-
-          <div className="w-80 md:w-[600px] mx-auto bg-[#14b0c5] rounded-3xl flex flex-col md:flex-row gap-6 items-center p-6">
-            <img
-              src={character.image}
-              alt={character.name}
-              className="w-60 h-auto rounded-xl"
-            />
-            <div className="text-white text-lg space-y-2 flex-grow">
-              <h2 className="text-3xl font-bold">{character.name}</h2>
-              <p><span className="font-bold">Status:</span> {character.status}</p>
-              <p><span className="font-bold">Species:</span> {character.species}</p>
-              <p><span className="font-bold">Gender:</span> {character.gender}</p>
-              <p><span className="font-bold">Origin:</span> {character.origin?.name}</p>
-              <p><span className="font-bold">Location:</span> {character.location?.name}</p>
-              <p><span className="font-bold">Total de episodios:</span> {character.episode?.length}</p>
-
-              <button
-                onClick={handleFavoriteClick}
-                className={`mt-4 px-6 py-3 rounded-full text-white ${
-                  isFavorite ? "⭐" : "☆"
-                }`}
-              >
-                {isFavorite ? "⭐" : "☆"}
-              </button>
-            </div>
           </div>
         </div>
       )}

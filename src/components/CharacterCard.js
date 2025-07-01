@@ -9,22 +9,25 @@ const CharacterCard = ({ character }) => {
   const isFavorite = favorites.some(fav => fav.id === character.id)
 
   return (
-    <article className="bg-[#14b0c5] rounded-3xl p-5 w-full max-w-sm mx-auto flex flex-col">
+  <article className="bg-[#0b0c10]/50 backdrop-blur-md rounded-2xl p-5 w-full max-w-sm mx-auto flex flex-col h-full transform transition duration-300 hover:scale-105 shadow-2xl">
       <div className="mb-2 mx-auto">
         <Image
-          className="rounded-t-3xl" 
+          className="rounded-t-2xl" 
           src={character.image}
           width={400}
           height={300}
           alt={character.name}
         />
       </div>
-      <h2 className="text-2xl mb-2">{character.name}</h2>
-      <p>{character.status}</p>
-      <p className="mb-2">{character.origin.name}</p>
+      <h2 className="text-2xl mb-2 text-[#E0E0E0]">{character.name}</h2>
+      <p className="text-[#8B5CF6]">{character.status}</p>
+      <p className="text-[#bcbcbc] py-3 mb-2">{character.origin.name}</p>
+
+      {/* Espaciador que empuja los botones hacia abajo */}
+      <div className="flex-grow" />
 
       <Link
-        className="bg-[#dae74b] flex justify-center rounded-2xl p-4 hover:bg-orange-300 cursor-pointer mb-3"
+        className="bg-[#00CC80] flex justify-center rounded-2xl p-4 hover:bg-[#00FF9F] cursor-pointer mb-3"
         href={`character/${character.id}`}
       >
         View more
@@ -32,7 +35,7 @@ const CharacterCard = ({ character }) => {
 
       <button
         onClick={(e) => {
-          e.preventDefault() // evitar que el click navegue al link
+          e.preventDefault()
           if (isFavorite) {
             deleteToFavorites(character.id)
           } else {

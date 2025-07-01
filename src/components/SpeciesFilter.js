@@ -56,7 +56,7 @@ const SpeciesFilter = () => {
     <div className="px-6 py-10 space-y-10">
       {Object.entries(groupedSpecies).map(([specie, characters]) => (
         <div key={specie} className="relative w-full">
-          <h2 className="text-white text-2xl mb-4">{specie}</h2>
+          <h2 className="text-white text-2xl mb-4 px-4 font-medium">{specie}</h2>
 
           {/*bton para scroll a la izquierda, solo visible en pantallas medianas en adelante */}
           <button
@@ -78,11 +78,11 @@ const SpeciesFilter = () => {
                 <Link href={`/character/${char.id}`} key={char.id}>
                   <div className="min-w-[250px] transition-transform duration-300 hover:scale-105 active:scale-95 cursor-pointer">
                     <img
-                      className="h-[300px] w-[250px] object-cover rounded-md"
+                      className="h-[200px] w-[250px] object-cover rounded-t-2xl"
                       src={char.image}
                       alt={char.name}
                     />
-                    <div className="bg-black/60 p-2">
+                    <div className="bg-black/60 p-2 rounded-2xl">
                       <ul>
                         <li className="text-white font-bold py-2 text-center">{char.name}</li>
                       </ul>
@@ -93,7 +93,7 @@ const SpeciesFilter = () => {
                               e.preventDefault()
                               deleteToFavorites(char.id) // eliminar favorito si ya esta
                             }}
-                            className="text-2xl text-white px-2 py-1"
+                            className="flex items-center justify-center gap-2 text-yellow-400 hover:text-yellow-500 text-3xl cursor-pointer select-none mt-4"
                           >
                             ⭐
                           </button>
@@ -104,7 +104,7 @@ const SpeciesFilter = () => {
                               // Agrego fav con sus datos
                               handleAddToFavorites(char.name, char.image, char.id, "character")
                             }}
-                            className="text-3xl text-white px-2 py-1"
+                            className="flex items-center justify-center gap-2 text-yellow-400 hover:text-yellow-500 text-3xl cursor-pointer select-none mt-4"
                           >
                             ☆
                           </button>

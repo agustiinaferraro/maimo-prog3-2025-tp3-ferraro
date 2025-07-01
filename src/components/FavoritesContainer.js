@@ -26,14 +26,14 @@ const FavoritesContainer = () => {
             href={`/character/${fav.id}`}
             className="cursor-pointer group"
           >
-            <div className="bg-[#14b0c5] rounded-lg overflow-hidden relative">
+            <div className="bg-[#0b0c10]/50 backdrop-blur-md rounded-2xl p-5 w-full max-w-full mx-auto transform transition duration-300 hover:scale-105 shadow-5xl gap-6">
               {fav.image ? (
                 <Image
                   src={fav.image}
                   alt={fav.title}
                   width={400}
                   height={300}
-                  className="object-cover w-full h-48 group-hover:brightness-75 transition"
+                  className="object-cover w-full h-48 group-hover:brightness-75 transition rounded-t-2xl"
                 />
               ) : (
                 <div className="bg-gray-700 text-white flex items-center justify-center h-48">
@@ -47,7 +47,7 @@ const FavoritesContainer = () => {
                     e.preventDefault()
                     deleteToFavorites(fav.id)
                   }}
-                  className="absolute top-2 right-2 text-yellow-400 text-2xl"
+                  className="flex items-center justify-center gap-2 text-yellow-400 hover:text-yellow-500 text-3xl cursor-pointer select-none mt-4"
                 >
                   ⭐
                 </button>

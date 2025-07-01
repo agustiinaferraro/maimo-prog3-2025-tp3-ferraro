@@ -10,15 +10,15 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <div className="flex items-center justify-between flex-wrap text-white px-4 py-2 bg-gradient-to-r from-black to-transparent">
-      {/* Logo a la izquierda */}
+    <div className="flex items-center justify-between flex-wrap text-white px-10 py-6 bg-[#000000]">
+      {/* logo a la izquierda */}
       <Link href="/">
         <Image 
           src="/assets/logo.png" 
           alt="logo" 
-          width={50} 
-          height={50} 
-          className="h-[50px] object-cover rounded-full" 
+          width={180} 
+          height={30} 
+          className="h-[50px] object-cover" 
         />
       </Link>
 

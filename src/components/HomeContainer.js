@@ -42,7 +42,7 @@ const HomeContainer = () => {
   if (error) return <div className="text-white text-center mt-20">Error al cargar los personajes</div>
 
   return (
-    <div className="px-6 py-8 items-center md:w-5/5 overflow-x-hidden">
+    <div className="pb-8 items-center md:w-5/5 overflow-x-hidden">
       {searchTerm ? (
         <>
           <h2 className="text-left text-3xl text-white font-bold py-6">
@@ -56,17 +56,22 @@ const HomeContainer = () => {
         </>
       ) : (
         <>
-          <div>
-            <Image
-              className="rounded-t-3xl"
-              src={'/assets/banner (2).png'}
-              width={1700}
-              height={800}
-              alt={'banner'}
-            />
-          </div>
-          <h1 className="text-4xl flex justify-center py-18 text-white">
-            Rick and Morty Maimo app
+        <div className="w-full overflow-hidden">
+          <Image
+            src="/assets/banner.png"
+            alt="banner"
+            width={1920}
+            height={600}
+            layout="responsive"
+            className="w-full h-auto"
+            style={{
+            WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+            maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
+            }}
+          />
+        </div>
+          <h1 className="font-bold text-5xl flex justify-center py-18 text-white">
+            Rick and Morty
           </h1>
           <CharacterGrid characters={characters} />
         </>
