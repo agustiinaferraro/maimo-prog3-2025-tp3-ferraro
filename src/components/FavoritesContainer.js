@@ -1,19 +1,35 @@
 'use client'
 
 import { useAppContext } from "@/app/context/AppContext"
+import { useState, useEffect } from "react"
+
 import Image from "next/image"
 import Link from "next/link"
+import Loading from "./Loading"
 
 const FavoritesContainer = () => {
   const { favorites, deleteToFavorites, searchTerm } = useAppContext()
+  const [loading, setLoading] = useState(true)
+
+  //carga loading 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 1000) //un seg
+
+    return () => clearTimeout(timer)
+  }, [])
 
   //filtrar favoritos 
   const filteredFavorites = favorites.filter(fav =>
     fav.title.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  if (loading) return <Loading />
+
   if (filteredFavorites.length === 0) {
-    return <p className="text-white text-center mt-10">No hay favoritos para mostrar</p>
+    return <p className="text-white text-center flex items-center justify-center mt-10 text-3xl" style={{height: '3rem'}}>
+    No hay favoritos para mostrar</p>
   }
 
   return (

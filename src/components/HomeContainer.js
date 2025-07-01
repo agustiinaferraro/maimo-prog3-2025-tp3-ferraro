@@ -4,6 +4,7 @@ import axios from 'axios'
 import CharacterGrid from './CharacterGrid'
 import Image from 'next/image'
 import { useAppContext } from "@/app/context/AppContext"
+import Loading from "./Loading"
 
 const BASE_URL = `https://rickandmortyapi.com/api/`
 
@@ -38,7 +39,7 @@ const HomeContainer = () => {
     setFiltered(filtro)
   }, [searchTerm, characters])
 
-  if (loading) return <div className="text-white text-center mt-20">Cargando...</div>
+  if (loading) return <Loading />
   if (error) return <div className="text-white text-center mt-20">Error al cargar los personajes</div>
 
   return (

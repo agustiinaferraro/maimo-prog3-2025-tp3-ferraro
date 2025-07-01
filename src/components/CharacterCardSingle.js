@@ -4,7 +4,8 @@ import Link from "next/link"
 import { useAppContext } from "@/app/context/AppContext"
 import { useState, useEffect } from "react"
 import axios from "axios"
-import CharacterCard from "./CharacterCard" // para mostrar resultados de búsqueda
+import CharacterCard from "./CharacterCard"
+import Loading from "./Loading"
 
 const BASE_URL = 'https://rickandmortyapi.com/api/'
 
@@ -14,17 +15,25 @@ const CharacterCardSingle = ({ character }) => {
   const [searchResults, setSearchResults] = useState([])
   const [loading, setLoading] = useState(false)
 
-  // controla favsss 
+  // Chequea si es favorito
   useEffect(() => {
     const exists = favorites.some(fav => fav.id === character.id)
     setIsFavorite(exists)
   }, [favorites, character.id])
 
-  // busca personajes cuando cambia searchTerm
+  // muestra loading al entrar directo al personaje
+  useEffect(() => {
+    if (!searchTerm) {
+      setLoading(true)
+      const timeout = setTimeout(() => setLoading(false), 500)
+      return () => clearTimeout(timeout)
+    }
+  }, [searchTerm])
+
+  // Buscar personajes cuando cambia searchTerm
   useEffect(() => {
     if (!searchTerm) {
       setSearchResults([])
-      setLoading(false)
       return
     }
 
@@ -41,14 +50,12 @@ const CharacterCardSingle = ({ character }) => {
   }, [searchTerm])
 
   const handleFavoriteClick = () => {
-    if (isFavorite) {
-      deleteToFavorites(character.id)
-    } else {
-      handleAddToFavorites(character.name, character.image, character.id, "character")
-    }
+    isFavorite
+      ? deleteToFavorites(character.id)
+      : handleAddToFavorites(character.name, character.image, character.id, "character")
   }
 
-  if (loading) return <p className="text-white text-center mt-10">Cargando resultados...</p>
+  if (loading) return <Loading />
 
   return (
     <div className="px-6 py-8 relative max-w-4xl mx-auto md:p-10">
@@ -89,9 +96,7 @@ const CharacterCardSingle = ({ character }) => {
             <button
               onClick={(e) => {
                 e.preventDefault()
-                isFavorite
-                  ? deleteToFavorites(character.id)
-                  : handleAddToFavorites(character.name, character.image, character.id, "character")
+                handleFavoriteClick()
               }}
               className="flex items-center justify-center gap-2 text-yellow-400 hover:text-yellow-500 text-3xl cursor-pointer select-none mt-4"
               aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
